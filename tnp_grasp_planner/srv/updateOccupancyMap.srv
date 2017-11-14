@@ -1,0 +1,4 @@
+# Update the occupancy map of a container
+# Input the container id (bin_A, bin_B, bin_C, box_1, box_2, box_3, tote, amnesty)
+std_msgs/String container_id
+---

@@ -1,0 +1,3 @@
+std_msgs/String bin_id
+int32 height 		# 1 = "high", 2 = "mid", 3 = "low"
+---

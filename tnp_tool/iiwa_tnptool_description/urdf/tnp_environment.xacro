@@ -1,0 +1,328 @@
+<?xml version="1.0"?>
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tnp_environment">
+<!-- THIS VERSION OF THE FILE HAS NO COLLISION DATA AT ALL! -->
+ 
+  <!-- The robot base is on the origin, but this was awkwardly adjusted afterwards. All the world objects are shifted downwards using this offset so we can use the robot base coordinates. -->
+  <xacro:property name="offset" value="-0.63" />
+  <xacro:property name="PI" value="3.14" />
+  <xacro:arg name="arc_task_type" default="stow" />  
+  <xacro:property name="arc_task_type" value="$(arg arc_task_type)" />
+ 
+  <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_is_A1"  default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_is_1AD" default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_is_1A5" default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_is_1B2" default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_is_K3"  default="true" />
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_is_A1"  default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_is_1AD" default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_is_1A5" default="true" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_is_1B2" default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_is_K3"  default="false" />
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_is_A1"  default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_is_1AD" default="true" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_is_1A5" default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_is_1B2" default="false" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_is_K3"  default="false" />
+
+    <!-- Initial box size declarations -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="A1_w" default="0.254" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="A1_l" default="0.175" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="A1_h" default="0.083" />
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="1AD_w" default="0.34" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="1AD_l" default="0.24" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="1AD_h" default="0.089" />
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="1A5_w" default="0.34" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="1A5_l" default="0.279" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="1A5_h" default="0.121" />
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="1B2_w" default="0.394" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="1B2_l" default="0.330" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="1B2_h" default="0.089" />
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="K3_w" default="0.495" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="K3_l" default="0.330" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="K3_h" default="0.19" />
+
+    <!-- The WORST SWITCH EVER -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_w" default="$(arg A1_w)"  if="$(arg box_1_is_A1)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_l" default="$(arg A1_l)"  if="$(arg box_1_is_A1)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_h" default="$(arg A1_h)"  if="$(arg box_1_is_A1)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_size" default="A1"        if="$(arg box_1_is_A1)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_w" default="$(arg 1AD_w)" if="$(arg box_1_is_1AD)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_l" default="$(arg 1AD_l)" if="$(arg box_1_is_1AD)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_h" default="$(arg 1AD_h)" if="$(arg box_1_is_1AD)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_size" default="1AD"       if="$(arg box_1_is_1AD)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_w" default="$(arg 1A5_w)" if="$(arg box_1_is_1A5)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_l" default="$(arg 1A5_l)" if="$(arg box_1_is_1A5)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_h" default="$(arg 1A5_h)" if="$(arg box_1_is_1A5)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_size" default="1A5"       if="$(arg box_1_is_1A5)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_w" default="$(arg 1B2_w)" if="$(arg box_1_is_1B2)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_l" default="$(arg 1B2_l)" if="$(arg box_1_is_1B2)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_h" default="$(arg 1B2_h)" if="$(arg box_1_is_1B2)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_size" default="1B2"       if="$(arg box_1_is_1B2)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_w" default="$(arg K3_w)"  if="$(arg box_1_is_K3)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_l" default="$(arg K3_l)"  if="$(arg box_1_is_K3)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_h" default="$(arg K3_h)"  if="$(arg box_1_is_K3)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_size" default="K3"        if="$(arg box_1_is_K3)" />
+
+
+    <!-- Again for box 2 -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_w" default="$(arg A1_w)"  if="$(arg box_2_is_A1)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_l" default="$(arg A1_l)"  if="$(arg box_2_is_A1)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_h" default="$(arg A1_h)"  if="$(arg box_2_is_A1)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_size" default="A1"        if="$(arg box_2_is_A1)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_w" default="$(arg 1AD_w)" if="$(arg box_2_is_1AD)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_l" default="$(arg 1AD_l)" if="$(arg box_2_is_1AD)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_h" default="$(arg 1AD_h)" if="$(arg box_2_is_1AD)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_size" default="1AD"       if="$(arg box_2_is_1AD)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_w" default="$(arg 1A5_w)" if="$(arg box_2_is_1A5)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_l" default="$(arg 1A5_l)" if="$(arg box_2_is_1A5)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_h" default="$(arg 1A5_h)" if="$(arg box_2_is_1A5)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_size" default="1A5"       if="$(arg box_2_is_1A5)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_w" default="$(arg 1B2_w)" if="$(arg box_2_is_1B2)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_l" default="$(arg 1B2_l)" if="$(arg box_2_is_1B2)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_h" default="$(arg 1B2_h)" if="$(arg box_2_is_1B2)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_size" default="1B2"       if="$(arg box_2_is_1B2)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_w" default="$(arg K3_w)"  if="$(arg box_2_is_K3)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_l" default="$(arg K3_l)"  if="$(arg box_2_is_K3)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_h" default="$(arg K3_h)"  if="$(arg box_2_is_K3)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_size" default="K3"        if="$(arg box_2_is_K3)" />
+
+    <!-- And again for box 3. Forgive me. -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_w" default="$(arg A1_w)"  if="$(arg box_3_is_A1)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_l" default="$(arg A1_l)"  if="$(arg box_3_is_A1)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_h" default="$(arg A1_h)"  if="$(arg box_3_is_A1)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_size" default="A1"        if="$(arg box_3_is_A1)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_w" default="$(arg 1AD_w)" if="$(arg box_3_is_1AD)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_l" default="$(arg 1AD_l)" if="$(arg box_3_is_1AD)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_h" default="$(arg 1AD_h)" if="$(arg box_3_is_1AD)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_size" default="1AD"       if="$(arg box_3_is_1AD)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_w" default="$(arg 1A5_w)" if="$(arg box_3_is_1A5)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_l" default="$(arg 1A5_l)" if="$(arg box_3_is_1A5)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_h" default="$(arg 1A5_h)" if="$(arg box_3_is_1A5)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_size" default="1A5"       if="$(arg box_3_is_1A5)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_w" default="$(arg 1B2_w)" if="$(arg box_3_is_1B2)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_l" default="$(arg 1B2_l)" if="$(arg box_3_is_1B2)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_h" default="$(arg 1B2_h)" if="$(arg box_3_is_1B2)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_size" default="1B2"       if="$(arg box_3_is_1B2)" />
+  
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_w" default="$(arg K3_w)"  if="$(arg box_3_is_K3)" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_l" default="$(arg K3_l)"  if="$(arg box_3_is_K3)" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_h" default="$(arg K3_h)"  if="$(arg box_3_is_K3)" /> <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_size" default="K3"        if="$(arg box_3_is_K3)" />
+
+
+    <!-- =============================== -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_x" default="-0.01" /><!-- x of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_y" default="-0.35" /><!-- y of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_z" default="-0.37" /><!-- z of origin in world coord -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_x" default="-0.47" /><!-- x of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_y" default="-0.36" /><!-- y of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_z" default="-0.37" /><!-- z of origin in world coord -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_x" default="-0.53" /> <!-- x of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_y" default="-0.19" /> <!-- y of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_z" default="-0.37" /> <!-- z of origin in world coord -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_A_w" default=".4" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_A_l" default=".9" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_A_h" default=".19" /><!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_A_x" default=".435" /> <!-- origin in global x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_A_y" default="-.425" /> <!-- origin in global y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_A_z" default="-.442" /><!-- origin in z -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_B_w" default=".34" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_B_l" default=".39" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_B_h" default=".085" /><!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_B_x" default=".345" /> <!-- origin in global x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_B_y" default=".435" /> <!-- origin in global y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_B_z" default="-.34" /><!-- origin in z -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_C_w" default=".33" /> <!-- in local x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_C_l" default=".38" /> <!-- in local y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_C_h" default=".085" /><!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_C_x" default="-.055" /> <!-- origin in global x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_C_y" default=".435" /> <!-- origin in global y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="bin_C_z" default="-.44" /><!-- origin in z -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="tote_w" default=".33" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="tote_l" default=".50" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="tote_h" default=".19" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="tote_x" default="-.33" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="tote_y" default="-0.48" />
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="tote_z" default="-.406" />
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="amnesty_w" default=".33" />   <!-- in local x -->  <!-- it was 0.4 -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="amnesty_l" default=".50" />   <!-- in local y -->  <!-- it was 0.48 -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="amnesty_h" default=".19" />   <!-- in z -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="amnesty_x" default="-.5" />   <!-- origin in global x -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="amnesty_y" default="-0.1" />   <!-- origin in global y -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="amnesty_z" default="-.406" />   <!-- origin in global z -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_x" default="-0.01" /><!-- x of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_y" default="-0.35" /><!-- y of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_1_z" default="-0.37" /><!-- z of origin in world coord -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_x" default="-0.47" /><!-- x of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_y" default="-0.36" /><!-- y of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_2_z" default="-0.37" /><!-- z of origin in world coord -->
+
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_x" default="-0.53" /> <!-- x of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_y" default="-0.19" /> <!-- y of origin in world coord -->
+    <!-- Default values (these should not activate) (Look in iiwa14mft_tnptool_upload.launch instead!!) --> <arg name="box_3_z" default="-0.37" /> <!-- z of origin in world coord -->
+
+  <!--Import the box macro -->
+  <xacro:include filename="$(find iiwa_tnptool_description)/urdf/tnp_box.xacro"/>
+  
+  <!-- === The base === -->
+
+  <link name="base_stand">
+    <visual>
+      <origin xyz="0 0 0.315" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.7 0.2 0.63"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+  </link>
+
+  <!--  All the joints between the environment objects are dummies -->
+  <joint name="base_stand_joint" type="fixed">
+    <parent link="world" />
+    <child link = "base_stand" />
+    <origin xyz="0 0 ${offset+0}" rpy="0 0 0" />   
+  </joint>
+
+<!-- === The storage system === -->
+
+  <xacro:tnp_box boxname="bin_A" box_w="$(arg bin_A_w)" box_l="$(arg bin_A_l)" box_h="$(arg bin_A_h)" thickness=".005" color="Brown">
+    <origin xyz="$(arg bin_A_x) $(arg bin_A_y) $(arg bin_A_z)" rpy="0 0 0" />   
+  </xacro:tnp_box>
+
+  <xacro:tnp_box boxname="bin_B" box_w="$(arg bin_B_w)" box_l="$(arg bin_B_l)" box_h="$(arg bin_B_h)" thickness=".005" color="Brown">
+    <origin xyz="$(arg bin_B_x) $(arg bin_B_y) $(arg bin_B_z)" rpy="0 0 ${PI/2}" />   
+  </xacro:tnp_box>
+ 
+  <xacro:tnp_box boxname="bin_C" box_w="$(arg bin_C_w)" box_l="$(arg bin_C_l)" box_h="$(arg bin_C_h)" thickness=".005" color="Brown">
+    <origin xyz="$(arg bin_C_x) $(arg bin_C_y) $(arg bin_C_z)" rpy="0 0 ${PI/2}" />   
+  </xacro:tnp_box>
+
+<!-- === The boxes (pick task) === -->
+
+  <xacro:if value="${arc_task_type == 'pick'}">
+
+    <xacro:property name="box_1_w" value=".39" /> <!-- in local x -->
+    <xacro:property name="box_1_l" value=".34" /> <!-- in local y -->
+    <xacro:property name="box_1_h" value=".08" /><!-- in z -->
+    <xacro:tnp_box boxname="box_1" box_w="$(arg box_1_w)" box_l="$(arg box_1_l)" box_h="$(arg box_1_h)" thickness=".005" color="Brown">
+      <origin xyz="$(arg box_1_x) $(arg box_1_y) $(arg box_1_z)" rpy="0 0 -${PI/2}" />
+    </xacro:tnp_box>
+
+    <xacro:property name="box_2_w" value=".39" /> <!-- in local x -->
+    <xacro:property name="box_2_l" value=".34" /> <!-- in local y -->
+    <xacro:property name="box_2_h" value=".08" /><!-- in z -->
+
+    <xacro:tnp_box boxname="box_2" box_w="$(arg box_2_w)" box_l="$(arg box_2_l)" box_h="$(arg box_2_h)" thickness=".005" color="Brown">
+      <origin xyz="$(arg box_2_x) $(arg box_2_y) $(arg box_2_z)" rpy="0 0 -${PI/2}" />   
+    </xacro:tnp_box>
+
+    <xacro:property name="box_3_w" value=".39" /> <!-- in local x -->
+    <xacro:property name="box_3_l" value=".34" /> <!-- in local y -->
+    <xacro:property name="box_3_h" value=".08" /><!-- in z -->
+
+    <xacro:tnp_box boxname="box_3" box_w="$(arg box_3_w)" box_l="$(arg box_3_l)" box_h="$(arg box_3_h)" thickness=".005" color="Brown">
+      <origin xyz="$(arg box_3_x) $(arg box_3_y) $(arg box_3_z)" rpy="0 0 ${PI}" />   
+    </xacro:tnp_box>
+  </xacro:if>
+
+
+  <!-- === The tote (stow task) === -->
+
+  <xacro:if value="${arc_task_type == 'stow'}">
+    <xacro:tnp_box boxname="tote" box_w="$(arg tote_w)" box_l="$(arg tote_l)" box_h="$(arg tote_h)" thickness=".02" color="Red">
+      <origin xyz="$(arg tote_x) $(arg tote_y) $(arg tote_z)" rpy="0 0 -${PI/2}" />
+    </xacro:tnp_box>
+  </xacro:if>
+
+
+  <!-- === The tote's surroundings === -->
+
+  <xacro:property name="tote_carrier_table_l" value=".65" />
+  <xacro:property name="tote_carrier_table_h" value=".19" />
+
+  <link name="tote_surroundings">
+
+    <!-- Left side of tote encasing -->
+    <visual>
+      <origin xyz="0.325 -${tote_carrier_table_l/2+.1} ${tote_carrier_table_h/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 ${tote_carrier_table_l} ${tote_carrier_table_h}"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <!-- Right side of tote encasing -->
+    <visual>
+      <origin xyz="-0.325 -${tote_carrier_table_l/2+.1} ${tote_carrier_table_h/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 ${tote_carrier_table_l} ${tote_carrier_table_h}"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+
+    <!-- Vertical bars carrying the black stuff are 94 cm away from origin. -->
+    <visual>
+      <origin xyz="0 -1.02 .6" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.65 0.02 .8"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+  </link>
+
+  <joint name="tote_surroundings_joint" type="fixed">
+    <parent link="world" />
+    <child link = "tote_surroundings" />
+    <origin xyz="0 0 ${offset+0}" rpy="0 0 0" />   
+  </joint>
+
+</robot> 

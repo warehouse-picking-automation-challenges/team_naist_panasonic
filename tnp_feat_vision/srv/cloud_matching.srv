@@ -1,0 +1,13 @@
+# target_id is the item we think we grasped
+# image_data[] contains up to 4 {cam_id, rgb_images, depth_images, cameras_infos}
+std_msgs/String target_id
+std_msgs/String[] cam_id
+sensor_msgs/Image[]  rgb_data
+sensor_msgs/Image[]  depth_data
+sensor_msgs/CameraInfo[]  rgb_info_data
+sensor_msgs/CameraInfo[]  depth_info_data
+---
+#the first element should be target_id
+std_msgs/String[] items_ids 
+std_msgs/Float64[] confidences
+geometry_msgs/PoseStamped[] poses

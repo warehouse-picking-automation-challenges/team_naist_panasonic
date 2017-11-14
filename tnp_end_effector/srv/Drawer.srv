@@ -1,0 +1,4 @@
+#inputs
+std_msgs/Int16 setDrawerAction # 0 is close, 1 is open, 2 is shake and close
+---
+bool succeeded

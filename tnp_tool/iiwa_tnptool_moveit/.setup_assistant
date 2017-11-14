@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: iiwa_tnptool_description
+    relative_path: urdf/iiwa_tnptool.urdf.xacro
+  SRDF:
+    relative_path: config/iiwa14mft_tnptool.srdf
+  CONFIG:
+    author_name: Felix
+    author_email: FvDrigalski@gmail.com
+    generated_timestamp: 1496143619

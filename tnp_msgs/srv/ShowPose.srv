@@ -1,0 +1,4 @@
+geometry_msgs/Pose pose
+string name   			# This can be a number of keyphrases: "target_item_pose", "target_robot_pose", "refused_item_pose"
+string ns		# (namespace of the marker) This can be left empty, or set to the requesting node's name (so it does not get in the way of other nodes)
+---

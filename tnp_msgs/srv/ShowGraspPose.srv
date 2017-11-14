@@ -1,0 +1,5 @@
+geometry_msgs/Quaternion pad_orientation
+geometry_msgs/Point pad_point_1
+geometry_msgs/Point pad_point_2
+string ns		# (namespace of the marker) This can be left empty, or set to the requesting node's name (so it does not get in the way of other nodes)
+---

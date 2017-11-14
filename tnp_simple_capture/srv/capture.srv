@@ -1,0 +1,5 @@
+string typeToSave  #color, depth, depth_reg, ir
+string saveFileName
+---
+# output: Saved file path
+string savedFilePath

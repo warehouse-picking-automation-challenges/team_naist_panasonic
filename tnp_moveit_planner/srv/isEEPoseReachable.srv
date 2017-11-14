@@ -1,0 +1,6 @@
+#inputs
+geometry_msgs/Pose EE_target_pose
+bool use_gripper_EE
+---
+#outputs
+bool pose_is_reachable

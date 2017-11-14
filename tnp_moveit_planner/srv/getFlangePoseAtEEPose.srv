@@ -1,0 +1,8 @@
+#inputs
+geometry_msgs/Pose EE_target_pose
+bool use_gripper_EE
+---
+#outputs
+geometry_msgs/Pose flange_target_pose
+bool pose_is_reachable					# If this is false, what to do? Hmmm.
+float64 A7_angle

@@ -1,0 +1,5 @@
+#inputs
+bool setLinActuatorState
+---  
+#outputs
+#bool isLinActuatorOn

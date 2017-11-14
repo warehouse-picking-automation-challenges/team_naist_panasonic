@@ -1,0 +1,7 @@
+# extract the suction candidates from the depth image of the whole container
+# pass the container name as we know the empty container depth
+string container #bin_A, bin_B, bin_C, tote, amnesty
+string[] target_ids #in case we can do surface/model matching
+---
+# return suction candidates poses
+geometry_msgs/PoseStamped[] suction_poses

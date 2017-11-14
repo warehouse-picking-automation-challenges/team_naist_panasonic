@@ -1,0 +1,4 @@
+string container_name   # This has to be one of the standard container names: "tote", "amnesty", "bin_A", "bin_B", "box_3"...
+bool keep_A7_fixed
+---
+bool success

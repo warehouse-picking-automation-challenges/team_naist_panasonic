@@ -1,0 +1,7 @@
+RecognitionSpaceConfiguration scan11_calib 4 0 calibMulti.yml recoSpace.yml
+
+capture folder : scan11_calib
+nbCameras : 4
+id Frame to visualize : 0
+input calibration : calibMulti.yml
+output recognition space configuration : recoSpace.yml

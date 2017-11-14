@@ -1,0 +1,6 @@
+# Find empty/occupied space in a container
+# Pass the container name to compare current and previous state
+string container #box_1, box_2, box_3, bin_A, bin_B, bin_C(, tote, amnesty)
+---
+# Return 3D array of occupancy (empty: 0, occupied: 1)
+std_msgs/ByteMultiArray occupancy_grid

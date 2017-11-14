@@ -1,0 +1,36 @@
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<!--Use a rosbag file with the following topics-->
+
+<launch>
+  <arg name="path" default="" />
+  <!--play the bag with the camera_bag topic to avoid collisions with real camera feed-->
+  <node pkg="rosbag" type="play" name="player" args="--clock --loop $(arg path) /camera/rgb/camera_info:=/camera_bag/rgb/camera_info /camera/depth/camera_info:=/camera_bag/depth/camera_info /camera/rgb/image_raw:=/camera_bag/rgb/image_raw /camera/depth/image_raw:=/camera_bag/depth/image_raw"/>
+  <remap from="/camera/color/camera_info" to="/camera_bag/rgb/camera_info" />
+  <remap from="/camera/color/image_raw" to="/camera_bag/rgb/image_raw" />
+  <remap from="/camera/depth/camera_info" to="/camera_bag/depth/camera_info" />
+  <remap from="/camera/depth/image_raw" to="/camera_bag/depth/image_raw" />
+
+  <node name="tnp_image_converter" pkg="tnp_vision" type="tnp_image_converter"/>
+  <node name="tnp_plane_matching" pkg="tnp_vision" type="tnp_plane_matching" output="screen"/>
+</launch>

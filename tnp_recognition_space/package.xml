@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<package>
+  <name>tnp_recognition_space</name>
+  <version>2017.7.31</version>
+  <description>The tnp_rec_space package</description>
+
+  <maintainer email="marcus.gall.lw3@is.naist.jp">Marcus Gall</maintainer>
+
+  <license>ALv2</license>
+
+  <url type="website">http://robotics.naist.jp/team-naist-panasonic</url>
+  
+  <author email="marcus.gall.lw3@is.naist.jp">Marcus Gall</author>
+  <author email="arnaud.delmotte.zr3@is.naist.jp">Arnaud Delmotte</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>image_transport</build_depend>
+  <build_depend>image_geometry</build_depend>
+  <build_depend>realsense_camera</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>tnp_feat_vision</build_depend>
+  <build_depend>tnp_svm</build_depend>
+  <build_depend>tnp_end_effector</build_depend> 
+  <build_depend>tnp_led_control</build_depend>
+  <build_depend>tnp_kuka_motion</build_depend>
+  <build_depend>tnp_end_effector</build_depend>
+  <build_depend>tnp_optoforce</build_depend>
+  <build_depend>tnp_weight_events</build_depend>
+  <build_depend>iiwa_msgs</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>cv_bridge</run_depend>
+  <run_depend>image_transport</run_depend>
+  <run_depend>image_geometry</run_depend>
+  <run_depend>realsense_camera</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>tnp_feat_vision</run_depend>
+  <run_depend>tnp_svm</run_depend>
+  <run_depend>tnp_end_effector</run_depend>
+  <run_depend>tnp_led_control</run_depend>
+  <run_depend>tnp_kuka_motion</run_depend>
+  <run_depend>tnp_end_effector</run_depend>
+  <run_depend>tnp_optoforce</run_depend>
+  <run_depend>tnp_weight_events</run_depend>
+  <run_depend>iiwa_msgs</run_depend>
+
+  <export>
+  </export>
+</package>

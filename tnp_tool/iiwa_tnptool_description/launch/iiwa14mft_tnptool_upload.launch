@@ -1,0 +1,306 @@
+<?xml version="1.0"?>
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<launch>
+
+  <!-- This launch file just loads the URDF with the given hardware interface and robot name into the ROS Parameter Server -->
+  <arg name="hardware_interface" default="PositionJointInterface"/>
+  <arg name="robot_name" default="iiwa"/>
+  <arg name="model" default="iiwa14mft"/>
+
+  <!-- TNP/ARC parameters -->
+  <arg name="arc_task_type" default="stow"/>
+  <param name="arc_task_type" value="$(arg arc_task_type)"/>
+
+  <!-- The ungodly long box definition for the pick task.  true -->
+
+    <!-- This is the least elegant thing ever, but there is no string comparison in roslaunch XML -->
+    <!-- ===== CHANGE THE BOX SIZES HERE ===== -->
+    <arg name="box_1_is_A1"  default="false" />
+    <arg name="box_1_is_1AD" default="false" />
+    <arg name="box_1_is_1A5" default="false" />
+    <arg name="box_1_is_1B2" default="true" />
+    <arg name="box_1_is_K3"  default="false" />
+
+    <arg name="box_2_is_A1"  default="false" />
+    <arg name="box_2_is_1AD" default="false" />
+    <arg name="box_2_is_1A5" default="false" />
+    <arg name="box_2_is_1B2" default="false" />
+    <arg name="box_2_is_K3"  default="true" />
+
+    <arg name="box_3_is_A1"  default="false" />
+    <arg name="box_3_is_1AD" default="false" />
+    <arg name="box_3_is_1A5" default="true" />
+    <arg name="box_3_is_1B2" default="false" />
+    <arg name="box_3_is_K3"  default="false" />
+    <!-- // Box sizes:  (box_w * box_l * box_h)
+    A1 – 25.4 x 17.5 x 8.5
+    1AD – 34 x 24 x 9
+    1A5 – 34 x 28 x 12
+    1B2 – 39.5 x 33 x 9
+    K3 – 49.5 x 33 x 16 -->
+
+    <!-- Initial box size declarations -->
+    <arg name="A1_w" default="0.254" />
+    <arg name="A1_l" default="0.175" />
+    <arg name="A1_h" default="0.083" />
+
+    <arg name="1AD_w" default="0.34" />
+    <arg name="1AD_l" default="0.24" />
+    <arg name="1AD_h" default="0.089" />
+
+    <arg name="1A5_w" default="0.34" />
+    <arg name="1A5_l" default="0.279" />
+    <arg name="1A5_h" default="0.121" />
+
+    <arg name="1B2_w" default="0.394" />
+    <arg name="1B2_l" default="0.330" />
+    <arg name="1B2_h" default="0.089" />
+
+    <arg name="K3_w" default="0.495" />
+    <arg name="K3_l" default="0.330" />
+    <arg name="K3_h" default="0.19" />
+
+    <!-- The WORST SWITCH EVER -->
+    <arg name="box_1_w" default="$(arg A1_w)"  if="$(arg box_1_is_A1)" /> <!-- in local x -->
+    <arg name="box_1_l" default="$(arg A1_l)"  if="$(arg box_1_is_A1)" /> <!-- in local y -->
+    <arg name="box_1_h" default="$(arg A1_h)"  if="$(arg box_1_is_A1)" /> <!-- in z -->
+    <arg name="box_1_size" default="A1"        if="$(arg box_1_is_A1)" />
+
+    <arg name="box_1_w" default="$(arg 1AD_w)" if="$(arg box_1_is_1AD)" /> <!-- in local x -->
+    <arg name="box_1_l" default="$(arg 1AD_l)" if="$(arg box_1_is_1AD)" /> <!-- in local y -->
+    <arg name="box_1_h" default="$(arg 1AD_h)" if="$(arg box_1_is_1AD)" /> <!-- in z -->
+    <arg name="box_1_size" default="1AD"       if="$(arg box_1_is_1AD)" />
+
+    <arg name="box_1_w" default="$(arg 1A5_w)" if="$(arg box_1_is_1A5)" /> <!-- in local x -->
+    <arg name="box_1_l" default="$(arg 1A5_l)" if="$(arg box_1_is_1A5)" /> <!-- in local y -->
+    <arg name="box_1_h" default="$(arg 1A5_h)" if="$(arg box_1_is_1A5)" /> <!-- in z -->
+    <arg name="box_1_size" default="1A5"       if="$(arg box_1_is_1A5)" />
+
+    <arg name="box_1_w" default="$(arg 1B2_w)" if="$(arg box_1_is_1B2)" /> <!-- in local x -->
+    <arg name="box_1_l" default="$(arg 1B2_l)" if="$(arg box_1_is_1B2)" /> <!-- in local y -->
+    <arg name="box_1_h" default="$(arg 1B2_h)" if="$(arg box_1_is_1B2)" /> <!-- in z -->
+    <arg name="box_1_size" default="1B2"       if="$(arg box_1_is_1B2)" />
+
+    <arg name="box_1_w" default="$(arg K3_w)"  if="$(arg box_1_is_K3)" /> <!-- in local x -->
+    <arg name="box_1_l" default="$(arg K3_l)"  if="$(arg box_1_is_K3)" /> <!-- in local y -->
+    <arg name="box_1_h" default="$(arg K3_h)"  if="$(arg box_1_is_K3)" /> <!-- in z -->
+    <arg name="box_1_size" default="K3"        if="$(arg box_1_is_K3)" />
+
+
+    <!-- Again for box 2 -->
+    <arg name="box_2_w" default="$(arg A1_w)"  if="$(arg box_2_is_A1)" /> <!-- in local x -->
+    <arg name="box_2_l" default="$(arg A1_l)"  if="$(arg box_2_is_A1)" /> <!-- in local y -->
+    <arg name="box_2_h" default="$(arg A1_h)"  if="$(arg box_2_is_A1)" /> <!-- in z -->
+    <arg name="box_2_size" default="A1"        if="$(arg box_2_is_A1)" />
+
+    <arg name="box_2_w" default="$(arg 1AD_w)" if="$(arg box_2_is_1AD)" /> <!-- in local x -->
+    <arg name="box_2_l" default="$(arg 1AD_l)" if="$(arg box_2_is_1AD)" /> <!-- in local y -->
+    <arg name="box_2_h" default="$(arg 1AD_h)" if="$(arg box_2_is_1AD)" /> <!-- in z -->
+    <arg name="box_2_size" default="1AD"       if="$(arg box_2_is_1AD)" />
+
+    <arg name="box_2_w" default="$(arg 1A5_w)" if="$(arg box_2_is_1A5)" /> <!-- in local x -->
+    <arg name="box_2_l" default="$(arg 1A5_l)" if="$(arg box_2_is_1A5)" /> <!-- in local y -->
+    <arg name="box_2_h" default="$(arg 1A5_h)" if="$(arg box_2_is_1A5)" /> <!-- in z -->
+    <arg name="box_2_size" default="1A5"       if="$(arg box_2_is_1A5)" />
+
+    <arg name="box_2_w" default="$(arg 1B2_w)" if="$(arg box_2_is_1B2)" /> <!-- in local x -->
+    <arg name="box_2_l" default="$(arg 1B2_l)" if="$(arg box_2_is_1B2)" /> <!-- in local y -->
+    <arg name="box_2_h" default="$(arg 1B2_h)" if="$(arg box_2_is_1B2)" /> <!-- in z -->
+    <arg name="box_2_size" default="1B2"       if="$(arg box_2_is_1B2)" />
+
+    <arg name="box_2_w" default="$(arg K3_w)"  if="$(arg box_2_is_K3)" /> <!-- in local x -->
+    <arg name="box_2_l" default="$(arg K3_l)"  if="$(arg box_2_is_K3)" /> <!-- in local y -->
+    <arg name="box_2_h" default="$(arg K3_h)"  if="$(arg box_2_is_K3)" /> <!-- in z -->
+    <arg name="box_2_size" default="K3"        if="$(arg box_2_is_K3)" />
+
+    <!-- And again for box 3. Forgive me. -->
+    <arg name="box_3_w" default="$(arg A1_w)"  if="$(arg box_3_is_A1)" /> <!-- in local x -->
+    <arg name="box_3_l" default="$(arg A1_l)"  if="$(arg box_3_is_A1)" /> <!-- in local y -->
+    <arg name="box_3_h" default="$(arg A1_h)"  if="$(arg box_3_is_A1)" /> <!-- in z -->
+    <arg name="box_3_size" default="A1"        if="$(arg box_3_is_A1)" />
+
+    <arg name="box_3_w" default="$(arg 1AD_w)" if="$(arg box_3_is_1AD)" /> <!-- in local x -->
+    <arg name="box_3_l" default="$(arg 1AD_l)" if="$(arg box_3_is_1AD)" /> <!-- in local y -->
+    <arg name="box_3_h" default="$(arg 1AD_h)" if="$(arg box_3_is_1AD)" /> <!-- in z -->
+    <arg name="box_3_size" default="1AD"       if="$(arg box_3_is_1AD)" />
+
+    <arg name="box_3_w" default="$(arg 1A5_w)" if="$(arg box_3_is_1A5)" /> <!-- in local x -->
+    <arg name="box_3_l" default="$(arg 1A5_l)" if="$(arg box_3_is_1A5)" /> <!-- in local y -->
+    <arg name="box_3_h" default="$(arg 1A5_h)" if="$(arg box_3_is_1A5)" /> <!-- in z -->
+    <arg name="box_3_size" default="1A5"       if="$(arg box_3_is_1A5)" />
+
+    <arg name="box_3_w" default="$(arg 1B2_w)" if="$(arg box_3_is_1B2)" /> <!-- in local x -->
+    <arg name="box_3_l" default="$(arg 1B2_l)" if="$(arg box_3_is_1B2)" /> <!-- in local y -->
+    <arg name="box_3_h" default="$(arg 1B2_h)" if="$(arg box_3_is_1B2)" /> <!-- in z -->
+    <arg name="box_3_size" default="1B2"       if="$(arg box_3_is_1B2)" />
+
+    <arg name="box_3_w" default="$(arg K3_w)"  if="$(arg box_3_is_K3)" /> <!-- in local x -->
+    <arg name="box_3_l" default="$(arg K3_l)"  if="$(arg box_3_is_K3)" /> <!-- in local y -->
+    <arg name="box_3_h" default="$(arg K3_h)"  if="$(arg box_3_is_K3)" /> <!-- in z -->
+    <arg name="box_3_size" default="K3"        if="$(arg box_3_is_K3)" />
+
+    <!-- =============================== -->
+
+    <arg name="box_1_x" default="-0.02" /><!-- x of origin in world coord -->
+    <arg name="box_1_y" default="-0.37" /><!-- y of origin in world coord -->
+    <arg name="box_1_z" default="-0.37" /><!-- z of origin in world coord -->
+
+    <arg name="box_2_x" default="-0.46" /><!-- x of origin in world coord -->
+    <arg name="box_2_y" default="-0.38" /><!-- y of origin in world coord -->
+    <arg name="box_2_z" default="-0.37" /><!-- z of origin in world coord -->
+
+    <arg name="box_3_x" default="-0.51" /> <!-- x of origin in world coord -->
+    <arg name="box_3_y" default="-0.19" /> <!-- y of origin in world coord -->
+    <arg name="box_3_z" default="-0.37" /> <!-- z of origin in world coord -->
+
+    <!-- Publish everything so we can use it in our nodes -->
+    <param name="tnp_environment/box_1_size" value="$(arg box_1_size)" />
+    <param name="tnp_environment/box_2_size" value="$(arg box_2_size)" />
+    <param name="tnp_environment/box_3_size" value="$(arg box_3_size)" />
+
+    <param name="tnp_environment/box_1_w" value="$(arg box_1_w)"/> <!-- in local x -->
+    <param name="tnp_environment/box_1_l" value="$(arg box_1_l)" /> <!-- in local y -->
+    <param name="tnp_environment/box_1_h" value="$(arg box_1_h)" /><!-- in z -->
+    <param name="tnp_environment/box_1_x" value="$(arg box_1_x)" /> <!-- x of origin in world coord -->
+    <param name="tnp_environment/box_1_y" value="$(arg box_1_y)" /> <!-- y of origin in world coord -->
+    <param name="tnp_environment/box_1_z" value="$(arg box_1_z)" /> <!-- z of origin in world coord -->
+
+    <param name="tnp_environment/box_2_w" value="$(arg box_2_w)"/> <!-- in local x -->
+    <param name="tnp_environment/box_2_l" value="$(arg box_2_l)" /> <!-- in local y -->
+    <param name="tnp_environment/box_2_h" value="$(arg box_2_h)" /><!-- in z -->
+    <param name="tnp_environment/box_2_x" value="$(arg box_2_x)" /> <!-- x of origin in world coord -->
+    <param name="tnp_environment/box_2_y" value="$(arg box_2_y)" /> <!-- y of origin in world coord -->
+    <param name="tnp_environment/box_2_z" value="$(arg box_2_z)" /> <!-- z of origin in world coord -->
+
+    <param name="tnp_environment/box_3_w" value="$(arg box_3_w)"/> <!-- in local x -->
+    <param name="tnp_environment/box_3_l" value="$(arg box_3_l)" /> <!-- in local y -->
+    <param name="tnp_environment/box_3_h" value="$(arg box_3_h)" /><!-- in z -->
+    <param name="tnp_environment/box_3_x" value="$(arg box_3_x)" /> <!-- x of origin in world coord -->
+    <param name="tnp_environment/box_3_y" value="$(arg box_3_y)" /> <!-- y of origin in world coord -->
+    <param name="tnp_environment/box_3_z" value="$(arg box_3_z)" /> <!-- z of origin in world coord -->
+
+  <!-- End of the box definition nightmare -->
+
+  <!-- ================================================================== -->
+
+  <!-- Start of the bin & tote definitions -->
+
+    <!-- FIXME: Define where the thickness of the wall is. (Is the coord. sys outside or inside?) -->
+    <!-- Storage system -->
+    <arg name="bin_A_w" default=".39" /> <!-- in local x -->
+    <arg name="bin_A_l" default=".88" /> <!-- in local y -->  <!-- This is weird, but ohwell. -->
+    <arg name="bin_A_h" default=".19" /><!-- in z -->
+    <arg name="bin_A_x" default=".445" /> <!-- origin in global x -->
+    <arg name="bin_A_y" default="-.43" /> <!-- origin in global y -->
+    <arg name="bin_A_z" default="-.38" /><!-- origin in z -->
+
+    <arg name="bin_B_w" default=".34" /> <!-- in local x -->
+    <arg name="bin_B_l" default=".39" /> <!-- in local y -->
+    <arg name="bin_B_h" default=".085" /><!-- in z -->
+    <arg name="bin_B_x" default=".34" /> <!-- origin in global x -->
+    <arg name="bin_B_y" default=".445" /> <!-- origin in global y -->
+    <arg name="bin_B_z" default="-.305" /><!-- origin in z -->
+
+    <arg name="bin_C_w" default=".33" /> <!-- in local x -->
+    <arg name="bin_C_l" default=".38" /> <!-- in local y -->
+    <arg name="bin_C_h" default=".085" /><!-- in z -->
+    <arg name="bin_C_x" default="-.065" /> <!-- origin in global x -->
+    <arg name="bin_C_y" default=".445" /> <!-- origin in global y -->
+    <arg name="bin_C_z" default="-.40" /><!-- origin in z -->
+
+    <arg name="tote_w" default=".29" />
+    <arg name="tote_l" default=".48" />
+    <arg name="tote_h" default=".19" />
+    <arg name="tote_x" default="-.24" />
+    <arg name="tote_y" default="-0.5" />
+    <arg name="tote_z" default="-.38" />
+
+    <arg name="amnesty_w" default=".33" />   <!-- in local x -->  <!-- it was 0.4 -->
+    <arg name="amnesty_l" default=".50" />   <!-- in local y -->  <!-- it was 0.48 -->
+    <arg name="amnesty_h" default=".19" />   <!-- in z -->
+    <arg name="amnesty_x" default="-.4" />   <!-- origin in global x -->
+    <arg name="amnesty_y" default="-0.1" />   <!-- origin in global y -->
+    <arg name="amnesty_z" default="-.395" />   <!-- origin in global z -->
+
+    <!-- Parameters to be published-->
+
+    <param name="tnp_environment/bin_A_w" value="$(arg bin_A_w)"/>
+    <param name="tnp_environment/bin_A_l" value="$(arg bin_A_l)"/>
+    <param name="tnp_environment/bin_A_h" value="$(arg bin_A_h)"/>
+    <param name="tnp_environment/bin_A_x" value="$(arg bin_A_x)"/>
+    <param name="tnp_environment/bin_A_y" value="$(arg bin_A_y)"/>
+    <param name="tnp_environment/bin_A_z" value="$(arg bin_A_z)"/>
+
+    <param name="tnp_environment/bin_B_w" value="$(arg bin_B_w)"/>
+    <param name="tnp_environment/bin_B_l" value="$(arg bin_B_l)"/>
+    <param name="tnp_environment/bin_B_h" value="$(arg bin_B_h)"/>
+    <param name="tnp_environment/bin_B_x" value="$(arg bin_B_x)"/>
+    <param name="tnp_environment/bin_B_y" value="$(arg bin_B_y)"/>
+    <param name="tnp_environment/bin_B_z" value="$(arg bin_B_z)"/>
+
+    <param name="tnp_environment/bin_C_w" value="$(arg bin_C_w)"/>
+    <param name="tnp_environment/bin_C_l" value="$(arg bin_C_l)"/>
+    <param name="tnp_environment/bin_C_h" value="$(arg bin_C_h)"/>
+    <param name="tnp_environment/bin_C_x" value="$(arg bin_C_x)"/>
+    <param name="tnp_environment/bin_C_y" value="$(arg bin_C_y)"/>
+    <param name="tnp_environment/bin_C_z" value="$(arg bin_C_z)"/>
+
+    <param name="tnp_environment/tote_w" value="$(arg tote_w)"/>
+    <param name="tnp_environment/tote_l" value="$(arg tote_l)"/>
+    <param name="tnp_environment/tote_h" value="$(arg tote_h)"/>
+    <param name="tnp_environment/tote_x" value="$(arg tote_x)"/>
+    <param name="tnp_environment/tote_y" value="$(arg tote_y)"/>
+    <param name="tnp_environment/tote_z" value="$(arg tote_z)"/>
+
+    <param name="tnp_environment/amnesty_w" value="$(arg amnesty_w)"/>
+    <param name="tnp_environment/amnesty_l" value="$(arg amnesty_l)"/>
+    <param name="tnp_environment/amnesty_h" value="$(arg amnesty_h)"/>
+    <param name="tnp_environment/amnesty_x" value="$(arg amnesty_x)"/>
+    <param name="tnp_environment/amnesty_y" value="$(arg amnesty_y)"/>
+    <param name="tnp_environment/amnesty_z" value="$(arg amnesty_z)"/>
+  <!-- End of bin/tote definitions -->
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find iiwa_tnptool_description)/urdf/iiwa_tnptool.urdf.xacro'
+  hardware_interface:=$(arg hardware_interface) robot_name:=$(arg robot_name)
+  box_1_w:=$(arg box_1_w) box_1_l:=$(arg box_1_l) box_1_h:=$(arg box_1_h)
+  box_2_w:=$(arg box_2_w) box_2_l:=$(arg box_2_l) box_2_h:=$(arg box_2_h)
+  box_3_w:=$(arg box_3_w) box_3_l:=$(arg box_3_l) box_3_h:=$(arg box_3_h)
+  box_1_x:=$(arg box_1_x) box_1_y:=$(arg box_1_y) box_1_z:=$(arg box_1_z)
+  box_2_x:=$(arg box_2_x) box_2_y:=$(arg box_2_y) box_2_z:=$(arg box_2_z)
+  box_3_x:=$(arg box_3_x) box_3_y:=$(arg box_3_y) box_3_z:=$(arg box_3_z)
+  bin_A_w:=$(arg bin_A_w) bin_A_l:=$(arg bin_A_l) bin_A_h:=$(arg bin_A_h)
+  bin_B_w:=$(arg bin_B_w) bin_B_l:=$(arg bin_B_l) bin_B_h:=$(arg bin_B_h)
+  bin_C_w:=$(arg bin_C_w) bin_C_l:=$(arg bin_C_l) bin_C_h:=$(arg bin_C_h)
+  bin_A_x:=$(arg bin_A_x) bin_A_y:=$(arg bin_A_y) bin_A_z:=$(arg bin_A_z)
+  bin_B_x:=$(arg bin_B_x) bin_B_y:=$(arg bin_B_y) bin_B_z:=$(arg bin_B_z)
+  bin_C_x:=$(arg bin_C_x) bin_C_y:=$(arg bin_C_y) bin_C_z:=$(arg bin_C_z)
+  tote_w:=$(arg tote_w) tote_l:=$(arg tote_l) tote_h:=$(arg tote_h)
+  tote_x:=$(arg tote_x) tote_y:=$(arg tote_y) tote_z:=$(arg tote_z)
+  amnesty_w:=$(arg amnesty_w) amnesty_l:=$(arg amnesty_l) amnesty_h:=$(arg amnesty_h)
+  amnesty_x:=$(arg amnesty_x) amnesty_y:=$(arg amnesty_y) amnesty_z:=$(arg amnesty_z)
+  arc_task_type:=$(arg arc_task_type)" />
+
+  <param name="tnp_environment/boxes_z" value="-.37" /><!-- in z -->
+
+</launch>

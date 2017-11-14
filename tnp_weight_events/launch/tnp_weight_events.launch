@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<launch>
+    <!-- | 		PARAMETERS  		| -->
+    <arg name="speed" default="100Hz"/>
+    <arg name="sensor_speed" default="100"/>
+
+    <!-- set task -->
+    <arg name="arc_task_type_is_pick" default="true"/>
+    <arg name="arc_task_type_is_stow" default="false"/>
+
+    <!-- Launch the nodes of the bins -->
+    <!-- Loads force plate node to get the weight -->
+    <include file="$(find tnp_optoforce)/launch/tnp_optoforce.launch">
+        <arg name="port" value="/dev/optoforce_CMU0A002" />
+        <arg name="scaling_file" value="$(find tnp_optoforce)/config/CMU0A002-calibration-data.yaml" />
+        <arg name="speed" value="$(arg speed)" />
+        <arg name="nodename" default="optoforce_bin_A"/>
+    </include>
+
+    <group if="$(arg arc_task_type_is_pick)">
+        <!-- This list has to correspond with the optoforce nodes that are started, so that tnp_weight_events can connect to them -->
+        <rosparam param="list_of_active_nodes">["optoforce_bin_A", "optoforce_bins_BC"]</rosparam>
+
+        <include file="$(find tnp_optoforce)/launch/tnp_optoforce.launch">
+            <arg name="port" value="/dev/optoforce_NIH0A015" />
+            <arg name="scaling_file" value="$(find tnp_optoforce)/config/NIH0A015-calibration-data.yaml" />
+            <arg name="speed" value="$(arg speed)" />
+            <arg name="nodename" default="optoforce_bins_BC"/>
+        </include>
+    </group>
+
+    <!-- For the stow task, add the tote sensors -->
+    <group if="$(arg arc_task_type_is_stow)">
+        <rosparam param="list_of_active_nodes">["optoforce_bin_A", "optoforce_tote"]</rosparam>
+        
+        <include file="$(find tnp_optoforce)/launch/tnp_optoforce.launch">
+            <arg name="port" value="/dev/optoforce_NIH0A009" />
+            <arg name="scaling_file" value="$(find tnp_optoforce)/config/NIH0A009-calibration-data.yaml" />
+            <arg name="speed" value="$(arg speed)" />
+            <arg name="nodename" default="optoforce_tote"/>
+        </include>
+    </group>
+
+    <node name="tnp_weight_events" pkg="tnp_weight_events" type="tnp_weight_events_node.py" output="screen">
+        <param name="sensor_speed" value="$(arg sensor_speed)" />
+    </node>
+
+</launch>

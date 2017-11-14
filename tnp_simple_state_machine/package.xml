@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>tnp_simple_state_machine</name>
+  <version>2017.7.31</version>
+  <description>The tnp_simple_state_machine package for simple monitoring.</description>
+
+  <maintainer email="pedro.uriguen.pl3@is.naist.jp">Pedro Uriguen</maintainer>
+
+  <license>ALv2</license>
+
+  <url type="website">http://robotics.naist.jp/team-naist-panasonic</url>
+  
+  <author email="pedro.uriguen.pl3@is.naist.jp">Pedro Uriguen</author>
+  <author email="garcia-g@is.naist.jp">Gustavo Garcia</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+
+  <export></export>
+</package>

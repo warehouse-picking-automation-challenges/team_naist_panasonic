@@ -1,0 +1,8 @@
+# target_id is the item we want to grasp
+# the target_container is the location where the target_id is (bin_a, bin_b, bin_c, tote, amnesty_tote)
+std_msgs/String target_item_id
+std_msgs/String target_container
+---
+std_msgs/String[] items_ids
+std_msgs/Float64[] confidences
+float64 weight

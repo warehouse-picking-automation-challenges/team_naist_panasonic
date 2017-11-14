@@ -1,0 +1,5 @@
+string container_name
+bool use_gripper_EE
+geometry_msgs/Pose target_pose_in_world
+float64 rotation_angle_z
+---

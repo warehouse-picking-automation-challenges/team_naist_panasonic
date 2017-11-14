@@ -1,0 +1,5 @@
+#inputs
+std_msgs/Float64 angle_in_rad # suction rotation angle from 0 [rad] (straight along the tube) to PI/2 [rad] (one side)
+---  
+#outputs
+bool succeeded

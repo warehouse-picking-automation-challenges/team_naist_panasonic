@@ -1,0 +1,30 @@
+<package>
+
+  <name>iiwa_tnptool_moveit</name>
+  <version>2017.7.31</version>
+  <description>
+     An automatically generated package with all the configuration and launch files for using the iiwa14mft_tnptool with the MoveIt! Motion Planning Framework
+  </description>
+
+  <maintainer email="felix.von_drigalski.fp6@is.naist.jp">Felix von Drigalski</maintainer>
+
+  <license>ALv2</license>
+
+  <url type="website">http://robotics.naist.jp/team-naist-panasonic</url>
+
+  <author email="felix.von_drigalski.fp6@is.naist.jp">Felix von Drigalski</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>iiwa_tnptool_description</build_depend>
+
+  <run_depend>moveit_ros_move_group</run_depend>
+  <run_depend>moveit_kinematics</run_depend>
+  <run_depend>moveit_planners_ompl</run_depend>
+  <run_depend>moveit_ros_visualization</run_depend>
+  <run_depend>joint_state_publisher</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>xacro</run_depend>
+  <run_depend>iiwa_tnptool_description</run_depend>
+
+</package>

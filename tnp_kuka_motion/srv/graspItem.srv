@@ -1,0 +1,15 @@
+#inputs
+# center of the grasp line (called poseGrasp in the tnp_deep) (in world)
+geometry_msgs/Pose target_pose      # The orientation of this is ununsed
+
+# From these two points the grasp width and angle are calculated
+geometry_msgs/Point pad_point_1 # first grasp line extremity using depth of the grasp point plane (in world)
+geometry_msgs/Point pad_point_2 # second grasp line extremity using depth of the grasp point plane (in world)
+
+# grasping force
+std_msgs/Int16 force
+
+bool fuzzyMode
+---
+#outputs
+bool success

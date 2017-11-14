@@ -1,0 +1,6 @@
+# extract the grasping (gripper) candidates from the depth image
+float64[] bounding_box # center_x, center_y, box_width and box_height, these are in the image frame of the SR300
+string target_id #in case we can do surface/model matching 
+---
+# return suction candidates poses
+geometry_msgs/PoseStamped[] gripper_poses

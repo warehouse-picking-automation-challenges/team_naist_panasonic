@@ -1,0 +1,5 @@
+#inputs
+bool setBlowerState
+---
+#outputs
+#bool isBlowerOn

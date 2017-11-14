@@ -1,0 +1,8 @@
+# camera id whose shutter should be open, all the rest will be closed
+# E: end efector
+# L: left (from the robot perspective)
+# C: center
+# B: base (robot base)
+# R: right (from the robot perspective)
+std_msgs/String camera_id
+---

@@ -1,0 +1,41 @@
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<launch>  
+  <!-- Launch the tracking node -->
+  <node pkg="visp_auto_tracker" type="visp_auto_tracker" name="visp_auto_tracker" output="screen">
+    <param name="model_path" value="$(find tnp_hand_eye_calib)/models" />
+    <param name="model_name" value="tnp_pattern" />
+    <param name="debug_display" value="True" />
+        
+    <remap from="/visp_auto_tracker/camera_info" to="/camera/rgb/camera_info"/>
+    <remap from="/visp_auto_tracker/image_raw" to="/camera/rgb/image_raw"/>
+    <param name="camera_name" value="/camera/rgb/image_raw" />
+    <param name="camera_info_url" value="package://visp_auto_tracker/models/calibration.ini" type="string" /> 
+  </node>
+
+  <node pkg="visp_hand2eye_calibration" type="visp_hand2eye_calibration_calibrator" name="visp_hand2eye_calibration_calibrator"/>
+
+  <param name="check_camera_calibration" value="true" />
+  <node pkg="tnp_hand_eye_calib" type="calib_cartPose" name="calib_cartPose" output="screen"/>
+
+</launch>

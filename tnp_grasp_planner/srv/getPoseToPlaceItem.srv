@@ -1,0 +1,13 @@
+# estimate a pose where the item can be place based on an occupancy map
+std_msgs/String container_id  # the name of the container (bin_A, bin_B, bin_C, box_1, box_2, box_3)
+int16 section_num # in case of bin_A there are sections so we can use this to look for a spot in the "amnesty" section
+geometry_msgs/PoseStamped bounding_box_center_pose   # the bounding box containing the item (the received position is the center of the item)
+float64 item_width  # size in x (measured at the recognition space and its coordinate system)
+float64 item_length # size in y (idem)
+float64 item_height # size in z (idem)
+---
+# return the pose where the item should be released in container coordinates
+#this is the top of the item where the suction cup is attached (small adjustments for gripper)
+# NOTE that when this service fails the returned default is at the center of the container and 14 cm from the bottom (may be dangerous)
+geometry_msgs/PoseStamped pose_to_place_item_in_container_coords
+bool free_spot_found # to notify the task manager that even we're returning a free spot it's the default (avove the center of the container) so we need a map update

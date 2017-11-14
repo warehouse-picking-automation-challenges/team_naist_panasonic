@@ -1,0 +1,8 @@
+#inputs
+bool sweepToLeft  		# If this is true, the suction cup goes from the right to the left
+bool startFromTop		# If this is false, the start position is from the bottom. Not implemented.
+float64 height		# The z-coordinate in CONTAINER COORDINATES that the sweep should start at
+bool palpation_mode     # If true, stops at the first contact and tries suction there
+---
+#outputs
+bool success

@@ -1,0 +1,9 @@
+#inputs
+# Checks if this pose can be used for placing the item
+geometry_msgs/Pose EE_target_pose
+string container_name
+bool use_gripper_EE
+int16 calculation_mode # 0: Moveit. 1: Manual
+---
+#outputs
+bool motion_is_possible

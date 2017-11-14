@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<!-- Here we define the robot, we named it "iiwa14mft_tnptool" -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="iiwa14mft_tnptool">
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find iiwa_description)/urdf/materials.xacro" />
+  <!--Import the iiwa14 macro -->
+  <xacro:include filename="$(find iiwa_description)/urdf/iiwa14mft.xacro"/>
+  <!-- Import TNP environment data -->
+  <xacro:include filename="$(find iiwa_tnptool_description)/urdf/tnp_environment.xacro" />
+
+  <!--  Arguments for the iiwa14 macro  -->
+  <xacro:arg name="hardware_interface" default="PositionJointInterface"/>
+  <xacro:arg name="robot_name" default="iiwa"/>
+
+  <link name="world"/>
+
+  <gazebo reference="world">
+    <static>true</static>
+  </gazebo>
+
+  <!-- Here we insert an iiwa14 robot in the scene, it's origin is just on top of the box previously defined (if any). You can use 0,0,0 if you don't have that. -->
+  <xacro:iiwa14mft hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot_name)" parent="world">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:iiwa14mft>
+
+  <!-- tnptool properties -->
+  <xacro:property name="tnptool_mass" value="4.90" />
+  <xacro:property name="tnptool_joint_offset" value="0.00 0.00 0.00" />
+  <xacro:property name="tnptool_suction_offset" value="0.00 0.075 ${0.14+0.29+0.18-.0268 -.01}" />      <!-- The offset from flange to the tip of the suction cup when extended (z: actuator+tool_original+extra_length from tilting cup - adjustment for touch flange)  -some manual adjustment-->
+  <!-- The offset from flange to the tip of the closed gripper when CLOSED AND EXTENDED -->
+  <xacro:property name="tnptool_gripper_offset" value="0.00 -0.029 ${0.56-0.0268}" />
+
+  <!--  Here we define dummy joints between the tip of the iiwa14 and the base of the tnptool.
+  There is no offset between the two, that means the tnptool is attached at the robot flange. -->
+  <joint name="tnptool_joint" type="fixed">
+    <parent link="iiwa_link_ee" />
+    <child link = "tnptool_link" />
+    <origin xyz="${tnptool_joint_offset}" rpy="0 0 0" />
+  </joint>
+
+  <!-- Here we define the geometry of the tnptool. This will be the fixed part of the EE (slides, camera) -->
+  <link name="tnptool_link">
+    <!-- ActuatorBoxLeft -->
+    <visual>
+      <origin xyz="0 0.029 0.07" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.034 0.140"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0.029 0.07" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.034 0.140"/>
+      </geometry>
+    </collision>
+
+    <!-- ActuatorBoxRight -->
+    <visual>
+      <origin xyz="0 -0.029 0.07" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.034 0.140"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.029 0.07" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.034 0.140"/>
+      </geometry>
+    </collision>
+
+    <!-- Camera Box -->
+    <visual>
+      <origin xyz="-0.10 0 0.1" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.36 0.12"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.10 0 0.1" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.36 0.12"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <!-- Camera frame -->
+  <!-- Calibration parameters from June 19 -->
+  <joint name="tnp_ee_camera_frame_joint" type="fixed">
+    <parent link="iiwa_link_ee" />
+    <child link = "tnp_ee_camera_frame" />
+    <!-- This value comes out of the calibration -->
+    <!-- Hand-eye calibration using calibration cube -->
+    <origin xyz="-0.189 -0.022 0.139" rpy="0.110 0.023 -1.575" /> <!-- 7/11 -->
+  </joint>
+  <link name="tnp_ee_camera_frame" />
+
+  <!-- Suction part -->
+  <joint name="tnptool_suction_joint" type="fixed">
+    <parent link="tnptool_link" />
+    <child link = "tnptool_suction_link_ee" />
+    <origin xyz="${tnptool_suction_offset}" rpy="0 0 0" />
+  </joint>
+  <!--  The TCP frame + the cylinder for the suction cup  -->
+  <link name="tnptool_suction_link_ee">
+    <visual>
+      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.16" radius="0.015"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.16" radius="0.015"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Gripper part -->
+  <joint name="tnptool_gripper_joint" type="fixed">
+    <parent link="tnptool_link" />
+    <child link = "tnptool_gripper_link_ee" />
+    <origin xyz="${tnptool_gripper_offset}" rpy="0 0 0" />
+  </joint>
+  <!--  The TCP frame + the box for the gripper -->
+  <link name="tnptool_gripper_link_ee">
+    <visual>
+      <origin xyz="0 0 -0.12" rpy="0 0 0"/>
+      <geometry>
+        <!-- <box size="0.11 0.034 0.24"/> -->
+        <box size="0.11 0.038 0.24"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.12" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.11 0.038 0.24"/>
+      </geometry>
+    </collision>
+  </link>
+
+</robot>

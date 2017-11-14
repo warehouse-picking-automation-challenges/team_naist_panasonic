@@ -1,0 +1,12 @@
+# images from the recognition space
+std_msgs/String[] requested_items_to_compare
+std_msgs/String[] cam_id
+sensor_msgs/CameraInfo[] rgb_info_data
+sensor_msgs/CameraInfo[] depth_info_data
+sensor_msgs/Image[] rgb_data
+sensor_msgs/Image[] depth_data
+---
+# we'll get back vectors of items ids, poses and confidences of the recognized items,
+# the target_id should be included (ideally it would be the first and the one with highest confidence)
+std_msgs/String[] items_ids
+std_msgs/Float64[] confidences

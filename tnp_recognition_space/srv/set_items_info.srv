@@ -1,0 +1,4 @@
+std_msgs/String[] items_ids 	# items name (previously loaded by task manager from the Amazon USB json files)
+bool[] known 	# data known or unknown
+---
+std_msgs/Int16 num_items_received 	# num of items info received

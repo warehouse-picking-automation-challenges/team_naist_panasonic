@@ -1,0 +1,5 @@
+#inputs
+string side 		# "left", "right", "top", "bottom".
+string container_name		# "bin_A", "box_1" ...
+int16 motion_type		# 
+---

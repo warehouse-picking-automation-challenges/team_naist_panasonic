@@ -1,0 +1,4 @@
+std_msgs/Int16 target_led_num 		# target led from 1 to 8 (1 is the end effector)
+std_msgs/Int16 target_intensity 	# from 0 to 255
+---
+bool succeeded

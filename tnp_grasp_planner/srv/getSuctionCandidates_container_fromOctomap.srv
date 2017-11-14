@@ -1,0 +1,7 @@
+# extract the suction candidates from the octomap of the whole container
+std_msgs/String container_id #bin_A, bin_B, bin_C, tote, amnesty
+# virtual division of the bin (currently it only applies to bin_A)
+int16 section_num # 0: all bin, 1: closest to container origin, 2: farthest from container origin
+---
+# return suction candidates poses
+geometry_msgs/PoseStamped[] suction_poses

@@ -1,0 +1,6 @@
+# this sets the items info (previously loaded by task manager from the Amazon USB json files)
+# array of item name, dim_x, dim_y, dim_z, weight, type and description
+std_msgs/String[] items_ids
+std_msgs/Float64[] items_weights
+---
+std_msgs/Int64 total_items

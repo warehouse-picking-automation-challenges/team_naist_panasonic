@@ -1,0 +1,2 @@
+std_msgs/Int16 num_images # amount of pictures to take from the rec space
+---

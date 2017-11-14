@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<package>
+  <name>tnp_feat_vision</name>
+  <version>2017.7.31</version>
+  <description>The tnp_feat_vision package to compete in the Amazon Robotics Challenge 2017.</description>
+
+  <maintainer email="arnaud.delmotte.zr3@is.naist.jp">Arnaud Delmotte</maintainer>
+  <maintainer email="marcus.gall.lw3@is.naist.jp">Marcus Gall</maintainer>
+
+  <license>ALv2</license>
+
+  <url type="website">http://robotics.naist.jp/team-naist-panasonic</url>
+
+  <author email="arnaud.delmotte.zr3@is.naist.jp">Arnaud Delmotte</author>
+  <author email="marcus.gall.lw3@is.naist.jp">Marcus Gall</author>
+  <author email="lotfi.elhafi@gmail.com">Lotfi El Hafi</author>
+  <author email="garcia-g@is.naist.jp">Gustavo Garcia</author>
+  <author email="rodrigo.elizalde.qy5@is.naist.jp">Rodrigo Elizalde</author>  
+  <author email="yamazaki.wataru.yo6@is.naist.jp">Wataru Yamazaki</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>image_transport</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>realsense_camera</build_depend>
+  <build_depend>image_geometry</build_depend>
+  <build_depend>message_generation</build_depend>
+  <!-- System dependencies. -->
+  <build_depend>eigen</build_depend>
+  <build_depend>libpcl-all-dev</build_depend>
+
+  <run_depend>cv_bridge</run_depend>
+  <run_depend>image_transport</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>realsense_camera</run_depend>
+  <run_depend>image_geometry</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <!-- System dependencies. -->
+  <run_depend>libpcl-all</run_depend>
+
+  <export></export>
+</package>

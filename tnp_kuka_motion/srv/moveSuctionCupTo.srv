@@ -1,0 +1,6 @@
+#inputs
+geometry_msgs/Pose target_pose
+bool use_lin_motion			# Default: True. Set to false for PTP motion.
+---
+#outputs
+bool motionComplete

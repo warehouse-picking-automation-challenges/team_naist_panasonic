@@ -1,0 +1,4 @@
+int32 type_of_check
+# 0: Move the suction cup to the last seen marker
+---
+bool success

@@ -1,0 +1,8 @@
+#inputs
+# there are two control methods: force_control and position_control
+# force_control: closes the gripper using force control: 0 super weak!, 100 maximum force (can damage stuff)
+# position_control: closes the gripper to a certain width in millimeters (0 totally close, 110 fully open), use it before grasping an object (i.e., the space is too narrow)
+std_msgs/String gripper_control_method   # choose between force_control and position_control 
+std_msgs/Int16 gripper_control_parameter # set the force (force_control) or the width (position_control)
+---
+bool succeeded

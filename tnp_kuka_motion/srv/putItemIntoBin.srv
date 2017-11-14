@@ -1,0 +1,3 @@
+std_msgs/String bin_id
+bool use_gripper_EE
+---

@@ -1,0 +1,7 @@
+# this sets the items location (previously loaded by task manager from the Amazon USB json files)
+# location of items in bin a, bin bc, tote
+std_msgs/String[] bin_a_items
+std_msgs/String[] bins_bc_items
+std_msgs/String[] tote_items
+---
+std_msgs/Int64 total_items

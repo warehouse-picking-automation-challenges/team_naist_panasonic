@@ -1,0 +1,4 @@
+scripts/ckpt_arc2017/
+scripts/train_flow_ARC2017Settings_onTnpDeep.sh
+scripts/train_flow_ARC2017Settings_onTnpDeep2.sh
+scripts/bin/

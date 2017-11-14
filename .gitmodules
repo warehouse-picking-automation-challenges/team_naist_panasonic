@@ -1,0 +1,8 @@
+[submodule "phoxi_camera"]
+	path = phoxi_camera
+	url = ../phoxi-camera.git
+	branch = tnp
+[submodule "iiwa_stack"]
+	path = iiwa_stack
+	url = ../iiwa_stack_tnp.git
+	branch = tnp

@@ -1,0 +1,75 @@
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<!--Use a rosbag file with the following topics-->
+
+<launch>
+  <arg name="path" default="" />
+  <arg name="camera1_name" default="camera_1" />
+  <arg name="camera2_name" default="camera_2" />
+
+  <group ns="$(arg camera1_name)">
+    <!--play rosbags with the camera_bag topic to avoid collisions with real camera feed-->
+    <node pkg="rosbag" type="play" name="player" args="--clock --loop $(arg path) 
+      /camera/rgb/camera_info:=/$(arg camera1_name)_bag/rgb/camera_info 
+      /camera/depth/camera_info:=/$(arg camera1_name)_bag/depth/camera_info 
+      /camera/rgb/image_raw:=/$(arg camera1_name)_bag/rgb/image_raw 
+      /camera/depth/image_raw:=/$(arg camera1_name)_bag/depth/image_raw"/>
+    <!--remap the topics from the bags to the topics expected by the tnp_vision node-->
+    <remap from = "/camera/color/camera_info" to = "/$(arg camera1_name)_bag/rgb/camera_info" />
+    <remap from = "/camera/color/image_raw"   to = "/$(arg camera1_name)_bag/rgb/image_raw" />
+    <remap from = "/camera/depth/camera_info" to = "/$(arg camera1_name)_bag/depth/camera_info" />
+    <remap from = "/camera/depth/image_raw"   to = "/$(arg camera1_name)_bag/depth/image_raw" />
+    <!--remap the tnp_vision topics to the topics expected by the tnp_rec_space node-->
+    <remap from="/tnp_vision/feature_based/target_item_id" to="/$(arg camera1_name)/tnp_vision/feature_based/target_item_id" />
+    <remap from="/tnp_vision/feature_based/item_pose"      to="/$(arg camera1_name)/tnp_vision/feature_based/item_pose" />
+    <remap from="/tnp_vision/feature_based/confidence"     to="/$(arg camera1_name)/tnp_vision/feature_based/confidence" />
+
+    <node name="$(arg camera1_name)_tnp_image_converter" pkg="tnp_vision" type="tnp_image_converter"/>
+    <node name="$(arg camera1_name)_tnp_plane_matching" pkg="tnp_vision" type="tnp_plane_matching" output="screen"/>
+  </group>
+
+   <group ns="$(arg camera2_name)">
+    <!--play rosbags with the camera_bag topic to avoid collisions with real camera feed-->
+    <node pkg="rosbag" type="play" name="player" args="--clock --loop $(arg path) 
+      /camera/rgb/camera_info:=/$(arg camera2_name)_bag/rgb/camera_info 
+      /camera/depth/camera_info:=/$(arg camera2_name)_bag/depth/camera_info 
+      /camera/rgb/image_raw:=/$(arg camera2_name)_bag/rgb/image_raw 
+      /camera/depth/image_raw:=/$(arg camera2_name)_bag/depth/image_raw"/>
+    <!--remap the topics from the bags to the topics expected by the tnp_vision node-->
+    <remap from = "/camera/color/camera_info" to = "/$(arg camera2_name)_bag/rgb/camera_info" />
+    <remap from = "/camera/color/image_raw"   to = "/$(arg camera2_name)_bag/rgb/image_raw" />
+    <remap from = "/camera/depth/camera_info" to = "/$(arg camera2_name)_bag/depth/camera_info" />
+    <remap from = "/camera/depth/image_raw"   to = "/$(arg camera2_name)_bag/depth/image_raw" />
+    <!--remap the tnp_vision topics to the topics expected by the tnp_rec_space node-->
+    <remap from="/tnp_vision/feature_based/target_item_id" to="/$(arg camera2_name)/tnp_vision/feature_based/target_item_id" />
+    <remap from="/tnp_vision/feature_based/item_pose"      to="/$(arg camera2_name)/tnp_vision/feature_based/item_pose" />
+    <remap from="/tnp_vision/feature_based/confidence"     to="/$(arg camera2_name)/tnp_vision/feature_based/confidence" />
+
+    <node name="$(arg camera2_name)_tnp_image_converter" pkg="tnp_vision" type="tnp_image_converter"/>
+    <node name="$(arg camera2_name)_tnp_plane_matching" pkg="tnp_vision" type="tnp_plane_matching" output="screen"/>
+  </group>
+
+  <!--launch the recognition space node-->
+  <node name="tnp_rec_space" pkg="tnp_rec_space" type="tnp_rec_space" output="screen" />
+
+</launch>

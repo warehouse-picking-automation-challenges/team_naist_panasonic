@@ -1,0 +1,4 @@
+# this sets the items info (previously loaded by task manager from the Amazon USB json files)
+std_msgs/String[] items_ids
+---
+std_msgs/Int64 total_items

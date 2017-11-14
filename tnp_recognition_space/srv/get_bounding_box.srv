@@ -1,0 +1,8 @@
+---
+geometry_msgs/PoseStamped bb_pose
+# bb_width in bb_pose.x
+std_msgs/Float64 bb_width
+# bb_length in bb_pose.y
+std_msgs/Float64 bb_length
+# bb_height in bb_pose.z
+std_msgs/Float64 bb_height

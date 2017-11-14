@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<launch>
+    <param name="end_effector_live" type="bool" value="true"/>
+
+    <!-- These are the devices registered by the computer to which the arduinos are connected, e.g., /dev/ttyACM0 -->
+    <arg name="arduino_dev" default="/dev/serial/by-id/usb-Arduino__www.arduino.org__Arduino_Due_Prog._Port_9553633383035141F152-if00" doc="set the usb device accordingly, e.g. /dev/ttyACM0" />
+    <arg name="arduino_shutters" default="/dev/serial/by-id/usb-Arduino__www.arduino.org__Arduino_Due_Prog._Port_9553633383035181B022-if00"/>
+
+    <!-- Load the serial communication node -->
+    <include file="$(find tnp_serial_com)/launch/TSC.launch">
+        <arg name="arduino_dev" value="$(arg arduino_dev)"/>
+        <arg name="arduino_shutters" value="$(arg arduino_shutters)"/>
+    </include>
+
+    <!--suction/gripper controller-->
+    <node pkg="tnp_end_effector" type="tnp_end_effector_ee" name="tnp_end_effector" output="screen"/>
+
+    <!--shutters controller-->
+    <node pkg="tnp_end_effector" type="tnp_end_effector_shutters" name="tnp_shutters" output="screen"/> 
+
+</launch>

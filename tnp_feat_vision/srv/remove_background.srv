@@ -1,0 +1,9 @@
+# back and forth sending of pictures to remove background
+std_msgs/String[] cam_id
+sensor_msgs/Image[]  rgb_data
+sensor_msgs/Image[]  depth_data
+sensor_msgs/CameraInfo[]  rgb_info_data
+sensor_msgs/CameraInfo[]  depth_info_data
+---
+std_msgs/String[] cam_id
+sensor_msgs/Image[]  rgb_data

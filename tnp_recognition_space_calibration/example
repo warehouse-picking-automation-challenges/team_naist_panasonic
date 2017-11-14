@@ -1,0 +1,7 @@
+RecognitionSpaceCalibration scan11_calib 4 11 calibMulti.yml calibBox.yml
+
+calib folder : scan11_calib
+nbCameras : 4
+nbFrames : 11 (total images : 4*11)
+output calibration : calibMulti.yml
+initial box calibration : calibBox.yml

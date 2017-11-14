@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<package>
+  <name>tnp_grasp_planner</name>
+  <version>2017.7.31</version>
+  <description>The tnp_grasp_planner package</description>
+
+  <maintainer email="garcia-g@is.naist.jp">Gustavo Garcia</maintainer>
+  <maintainer email="yamazaki.wataru.yo6@is.naist.jp">Wataru Yamazaki</maintainer>
+
+  <license>ALv2</license>
+
+  <url type="website">http://robotics.naist.jp/team-naist-panasonic</url>
+
+  <author email="garcia-g@is.naist.jp">Gustavo Garcia</author>
+  <author email="yamazaki.wataru.yo6@is.naist.jp">Wataru Yamazaki</author>
+  <author email="rodrigo.elizalde.qy5@is.naist.jp">Rodrigo Elizalde</author>  
+  <author email="felix.von_drigalski.fp6@is.naist.jp">Felix von Drigalski</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>image_geometry</build_depend>
+  <build_depend>image_transport</build_depend>
+  <build_depend>realsense_camera</build_depend>
+  <build_depend>pcl_ros</build_depend>
+  <build_depend>pcl</build_depend>
+  <build_depend>octomap</build_depend>
+  <build_depend>octomap_ros</build_depend>
+  <build_depend>fcl</build_depend>
+  <build_depend>phoxi_camera</build_depend> 
+  <build_depend>tnp_kuka_motion</build_depend>
+
+  <run_depend>cmake_modules</run_depend>
+  <run_depend>cv_bridge</run_depend>
+  <run_depend>image_geometry</run_depend>
+  <run_depend>image_transport</run_depend>
+  <run_depend>realsense_camera</run_depend>
+  <run_depend>octomap</run_depend>
+  <run_depend>octomap_ros</run_depend>
+  <run_depend>fcl</run_depend>
+  <run_depend>phoxi_camera</run_depend>
+  <run_depend>tnp_kuka_motion</run_depend>
+
+  <export>
+  </export>
+</package>

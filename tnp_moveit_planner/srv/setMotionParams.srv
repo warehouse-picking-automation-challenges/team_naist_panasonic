@@ -1,0 +1,9 @@
+#inputs
+# All of these set private parameters on the parameter server. Defaults can also be set in the launch file.
+bool use_LIN_motion		# tries cartesian linear path if true
+float64 velocity_scaling_factor # default: 1.0
+float64 jump_threshold	# default: 0.0
+float64 eef_step		# default: 0.01
+---
+#outputs
+bool motionComplete

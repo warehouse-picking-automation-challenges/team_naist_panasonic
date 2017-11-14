@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<package>
+  <name>tnp_monitor</name>
+  <version>2017.7.31</version>
+  <description>The tnp_monitor package for visual monitoring and debug.</description>
+
+  <maintainer email="lotfi.elhafi@gmail.com">Lotfi El Hafi</maintainer>
+
+  <license>ALv2</license>
+
+  <url type="website">http://robotics.naist.jp/team-naist-panasonic</url>
+  
+  <author email="lotfi.elhafi@gmail.com">Lotfi El Hafi</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>image_transport</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>image_geometry</build_depend>
+  <build_depend>message_generation</build_depend>
+  <!-- TNP dependencies. -->
+  <build_depend>tnp_msgs</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+
+  <run_depend>cv_bridge</run_depend>
+  <run_depend>image_transport</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>image_geometry</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <!-- TNP dependencies. -->
+  <run_depend>tnp_msgs</run_depend>
+  <run_depend>visualization_msgs</run_depend>
+
+  <export></export>
+</package>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package>
+  <name>tnp_led_control</name>
+  <version>2017.7.31</version>
+  <description>The tnp_led_control package</description>
+
+  <maintainer email="okada.seigo@jp.panasonic.com">Seigo Okada</maintainer>
+
+  <license>ALv2</license>
+
+  <url type="website">http://robotics.naist.jp/team-naist-panasonic</url>
+  
+  <author email="okada.seigo@jp.panasonic.com">Seigo Okada</author>
+  <author email="yamamoto.mas@jp.panasonic.com">Masaki Yamamoto</author>
+  <author email="marcus.gall.lw3@is.naist.jp">Marcus Gall</author>
+  <author email="garcia-g@is.naist.jp">Gustavo Garcia</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+
+  <export>
+  </export>
+</package>

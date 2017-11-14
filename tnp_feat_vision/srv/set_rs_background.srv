@@ -1,0 +1,5 @@
+std_msgs/String[] cam_id
+std_msgs/Int16[] num_camera_per_scene # ros can't send array of arrays. so we send the length information in this array to reconstruct it on the target.
+sensor_msgs/Image[] rgb_data
+sensor_msgs/CameraInfo[] rgb_info_data
+---

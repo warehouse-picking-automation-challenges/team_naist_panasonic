@@ -1,0 +1,11 @@
+uint32 class_id
+string class_name
+float32 confidence
+float32 x
+float32 y
+float32 width
+float32 height
+float32 x_grasp
+float32 y_grasp
+float32 theta_grasp
+float32 width_grasp

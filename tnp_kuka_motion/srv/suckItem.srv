@@ -1,0 +1,8 @@
+#inputs
+geometry_msgs/Pose target_pose
+string container_name
+std_msgs/Int16 force
+bool fuzzyMode			# With this, adjacent points are attmpted immediately after failure
+---
+#outputs
+bool success

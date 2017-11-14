@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<package>
+  <name>tnp_hand_eye_calib</name>
+  <version>2017.7.31</version>
+  <description>The tnp_hand_eye_calib package</description>
+
+  <maintainer email="okada.seigo@jp.panasonic.com">Seigo Okada</maintainer>
+  <maintainer email="felix.von_drigalski.fp6@is.naist.jp">Felix von Drigalski</maintainer>
+
+  <license>ALv2</license>
+
+  <url type="website">http://robotics.naist.jp/team-naist-panasonic</url>
+
+  <author email="okada.seigo@jp.panasonic.com">Seigo Okada</author>
+  <author email="felix.von_drigalski.fp6@is.naist.jp">Felix von Drigalski</author>
+  <author email="kato.yusuke001@jp.panasonic.com">Yusuke Kato</author>  
+  <author email="garcia-g@is.naist.jp">Gustavo Garcia</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>iiwa_msgs</build_depend>
+  <build_depend>iiwa_ros</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
+  <build_depend>tnp_kuka_motion</build_depend>
+  <build_depend>tnp_moveit_planner</build_depend>
+  
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>iiwa_msgs</run_depend>
+  <run_depend>iiwa_ros</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
+  <run_depend>tnp_kuka_motion</run_depend>
+  <run_depend>tnp_moveit_planner</run_depend>
+
+  <export>
+  </export>
+</package>

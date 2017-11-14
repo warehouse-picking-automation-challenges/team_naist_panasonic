@@ -1,0 +1,3 @@
+<launch> 
+  <test test-name="end_effector_utest" pkg="tnp_end_effector" type="gtest_end_effector_unit" />
+</launch>

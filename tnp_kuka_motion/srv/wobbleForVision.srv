@@ -1,0 +1,8 @@
+#inputs
+int32 motionNumber
+float32 scalingFactor
+---
+#outputs
+bool motionComplete
+
+# This service moves the end effector around the current position to easily generate another view. IT IS NOT COLLISION-SAFE.

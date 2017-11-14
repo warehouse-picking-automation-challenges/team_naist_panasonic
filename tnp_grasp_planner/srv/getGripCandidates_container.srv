@@ -1,0 +1,7 @@
+# extract the grasping (gripper) candidates from the depth image of the whole container
+# pass the container name as we know the empty container depth
+string container #bin_a, bin_b, bin_c, tote, amnesty
+string[] target_ids #in case we can do surface/model matching
+---
+# return suction candidates poses
+geometry_msgs/PoseStamped[] gripper_poses

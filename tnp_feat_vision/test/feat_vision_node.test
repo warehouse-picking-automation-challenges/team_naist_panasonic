@@ -1,0 +1,3 @@
+<launch> 
+  <test test-name="feat_vision_node" pkg="tnp_feat_vision" type="gtest_feat_vision_node" />
+</launch>

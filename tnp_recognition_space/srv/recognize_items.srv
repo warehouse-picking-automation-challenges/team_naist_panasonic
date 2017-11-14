@@ -1,0 +1,6 @@
+# target_id is the item we think we grasped
+std_msgs/String target_item_id
+# basic_set of possible items 
+std_msgs/String[] possible_item_ids
+---
+ClassifierResult[] classifier_results

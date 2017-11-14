@@ -1,0 +1,102 @@
+# Created by https://www.gitignore.io/api/c++
+
+### C++ ###
+# Prerequisites
+**/*.d
+
+# Compiled Object files
+**/*.slo
+**/*.lo
+**/*.o
+**/*.obj
+
+# Precompiled Headers
+**/*.gch
+**/*.pch
+
+# Compiled Dynamic libraries
+# **/*.so    ## This gets in the way of yolo_light, which seems to need the .so files
+**/*.dylib
+**/*.dll
+
+# Fortran module files
+**/*.mod
+**/*.smod
+
+# Compiled Static libraries
+**/*.lai
+**/*.la
+**/*.a
+
+# Executables
+**/*.exe
+#**/*.out
+**/*.app
+
+# End of https://www.gitignore.io/api/c++
+
+
+# Additional
+**/*~ # save files
+*.*~
+.vscode
+docs/
+
+*.pyc
+
+*.jpg
+
+# yolo_light
+*.pyc
+*.parsed
+/yolo_light/scripts/summary/train
+/yolo_light/scripts/net/yolo/parse-history.txt
+/yolo_light/scripts/ckpt/
+/yolo_light/scripts/ckpt_arc2017/
+/yolo_light/scripts/ckpt_arc2017_arc2017-tnp-01/
+/yolo_light/scripts/test_arc2017/
+
+yolo_light/scripts/test_for_accuracy/images/
+yolo_light/scripts/test_for_accuracy/annotation/
+
+
+*/CATKIN_IGNORE
+
+# Arnaud projects
+arduino-1.8.2/
+ceres-solver-1.12.0/
+cpu_tsdf/
+scanner/build/
+captures/
+scanner/captures_linked
+scanner/cloud_linked
+
+
+flexbe_behavior_engine/
+*.weights
+*/build
+
+tnp_weight_events/scripts/__init__\.py
+
+*.png
+
+*.csv
+
+*.yml
+
+*.pcd
+
+*.json
+
+*.zip
+
+*.pkl
+
+tnp_svm/script/amazon_data/bbox_data/
+
+tnp_svm/script/data_bbox/
+
+tnp_svm/script/amazon_data/weight_data/
+
+# add the background needed file
+!tnp_svm/script/background/blackimage.png

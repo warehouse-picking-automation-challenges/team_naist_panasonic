@@ -1,0 +1,108 @@
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<!-- Example of how to use -->
+<!-- roslaunch tnp_rec_space tnp_rec_space_multiple_SR300.launch camera_1_serial_no:=620202003712 camera_2_serial_no:=617205002089 camera_3_serial_no:="61720300586" camera_4_serial_no:=553201000655 -->
+
+<!-- Launch file for using multiple RealSense R200 cameras -->
+<launch>
+  
+  <arg name="camera_1"              default="camera_L" />
+  <arg name="camera_1_camera_type"  default="SR300"    /> <!-- Type of camera -->
+  <arg name="camera_1_serial_no"    default="617205002089"   />
+  <arg name="camera_1_usb_port_id"  default=""        /> <!-- USB "Bus#-Port#" -->
+
+  <arg name="camera_2"              default="camera_C" />
+  <arg name="camera_2_camera_type"  default="SR300"    /> <!-- Type of camera -->
+  <arg name="camera_2_serial_no"    default="620202003712"   />
+  <arg name="camera_2_usb_port_id"  default=""        /> <!-- USB "Bus#-Port#" -->
+
+  <arg name="camera_3"              default="camera_r" />
+  <arg name="camera_3_camera_type"  default="SR300"    /> <!-- Type of camera -->
+  <arg name="camera_3_serial_no"    default="553201000655"  />
+  <arg name="camera_3_usb_port_id"  default=""        /> <!-- USB "Bus#-Port#" -->
+ 
+  <arg name="camera_4"              default="camera_B" />
+  <arg name="camera_4_camera_type"  default="SR300"    /> <!-- Type of camera -->
+  <arg name="camera_4_serial_no"    default="617203001912"  /> <!-- RS from Panasonic -->    
+  <arg name="camera_4_usb_port_id"  default=""        /> <!-- USB "Bus#-Port#" -->
+
+  <arg name="enable_depth"      default="true" />
+  <arg name="enable_color"      default="true" />
+  <arg name="color_fps"  	default="10" />
+  <arg name="color_width"  	default="1280" />
+  <arg name="color_height" 	default="720" />
+  <arg name="depth_fps"    	default="10" />
+  <arg name="depth_width"  	default="640" />
+  <arg name="depth_height" 	default="480" />
+  <arg name="mode" 		default="manual" />
+  <arg name="enable_tf" 	default="false" />
+
+  <param name="$(arg camera_2)/driver/enable_depth"      type="bool" value="$(arg enable_depth)" />
+  <param name="$(arg camera_2)/driver/enable_color"      type="bool" value="$(arg enable_color)" />
+  <param name="$(arg camera_2)/driver/enable_tf"         type="bool" value="$(arg enable_tf)" />
+  <param name="$(arg camera_2)/driver/mode"              type="str"  value="$(arg mode)" />
+  <param name="$(arg camera_2)/driver/depth_width"       type="int"  value="$(arg depth_width)" />
+  <param name="$(arg camera_2)/driver/depth_height"      type="int"  value="$(arg depth_height)" />
+  <param name="$(arg camera_2)/driver/color_width"       type="int"  value="$(arg color_width)" />
+  <param name="$(arg camera_2)/driver/color_height"      type="int"  value="$(arg color_height)" />
+  <param name="$(arg camera_2)/driver/depth_fps"         type="int"  value="$(arg depth_fps)" />
+  <param name="$(arg camera_2)/driver/color_fps"         type="int"  value="$(arg color_fps)" />
+
+  <param name="$(arg camera_3)/driver/enable_depth"      	type="bool" value="$(arg enable_depth)" />
+  <param name="$(arg camera_3)/driver/enable_color"      	type="bool" value="$(arg enable_color)" />
+  <param name="$(arg camera_3)/driver/enable_tf"         	type="bool" value="$(arg enable_tf)" />
+  <param name="$(arg camera_3)/driver/mode"              type="str"  value="$(arg mode)" />
+  <param name="$(arg camera_3)/driver/depth_width"       type="int"  value="$(arg depth_width)" />
+  <param name="$(arg camera_3)/driver/depth_height"      type="int"  value="$(arg depth_height)" />
+  <param name="$(arg camera_3)/driver/color_width"       type="int"  value="$(arg color_width)" />
+  <param name="$(arg camera_3)/driver/color_height"      type="int"  value="$(arg color_height)" />
+  <param name="$(arg camera_3)/driver/depth_fps"         type="int"  value="$(arg depth_fps)" />
+  <param name="$(arg camera_3)/driver/color_fps"         type="int"  value="$(arg color_fps)" />
+
+  <arg name="manager" value="camera_nodelet_manager_b" /> <!-- Single nodelet manager for all cameras -->
+  <node pkg="nodelet" type="nodelet" name="$(arg manager)" args="manager" output="screen"/>
+
+  <!-- User must include the .xml file for each camera with unique values for "camera" and 
+       either the "serial_no" or "usb_port_id" of the camera.
+       "camera" should be a user friendly string that follows the ROS Names convention. -->
+ <group ns="$(arg camera_2)">
+    <include file="$(find realsense_camera)/launch/includes/nodelet.launch.xml">
+      <arg name="manager"      value="/$(arg manager)" />
+      <arg name="camera"       value="$(arg camera_2)" />
+      <arg name="camera_type"  value="$(arg camera_2_camera_type)" />
+      <arg name="serial_no"    value="$(arg camera_2_serial_no)" />
+      <arg name="usb_port_id"  value="$(arg camera_2_usb_port_id)" />     
+    </include>
+  </group>
+
+ <group ns="$(arg camera_3)">
+    <include file="$(find realsense_camera)/launch/includes/nodelet.launch.xml">
+      <arg name="manager"      value="/$(arg manager)" />
+      <arg name="camera"       value="$(arg camera_3)" />
+      <arg name="camera_type"  value="$(arg camera_3_camera_type)" />
+      <arg name="serial_no"    value="$(arg camera_3_serial_no)" />
+      <arg name="usb_port_id"  value="$(arg camera_3_usb_port_id)" />     
+    </include>
+</group>
+
+</launch>

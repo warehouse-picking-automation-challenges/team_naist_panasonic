@@ -1,0 +1,4 @@
+# target_intensity : from 000 to 255
+std_msgs/String target_intensity
+---
+bool succeeded

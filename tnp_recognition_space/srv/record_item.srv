@@ -1,0 +1,7 @@
+std_msgs/String item_name # item_name overwrites default file name places it in folder
+std_msgs/Int16 suction_force
+std_msgs/Int16 num_rotations
+std_msgs/Int16 num_repetitions
+std_msgs/Int16 rotation_angle
+---
+std_msgs/Bool successful

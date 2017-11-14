@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- THIS FILE DOES NOT WORK YET! -->
+  <arg name="tool_name" default="tool"/> <!-- Name of the tool we are going to use -->
+  
+  <!-- Parameters to pass to the ROS node -->
+  <arg name="joint_position_topic" default="/iiwa/state/JointPosition"/>
+  <arg name="ros_rate" default="0.1"/>
+  
+  <param name="/iiwa/publishJointStates" type="boolean" value="true" /> <!--publish joint states (avoid joint_state_controller)-->
+  <param name="/iiwa/toolName" type="string" value="$(arg tool_name)" /> <!--Sunrise tool-->
+  
+  <!--  This loads the robot description  -->
+  <include ns="iiwa" file="$(find iiwa_tnptool_moveit)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+  
+  <!-- This publishes the state of the robot   -->
+  <node ns="iiwa" name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	respawn="false" output="screen" />
+  
+  <!-- Here we call the ROS node we have written, with the two parameters on top   -->
+  <node ns="iiwa" name="ReadRobotState" pkg="iiwa_tool_examples" type="read_robot_state" respawn="false" output="screen">
+    <param name="joint_position_topic" value="$(arg joint_position_topic)"/>
+    <param name="ros_rate" value="$(arg ros_rate)"/>
+  </node>
+  
+  <!-- Load RViZ with the given configuration file  -->
+  <!--  <node ns="iiwa" name="$(anon rviz)" pkg="rviz" type="rviz" respawn="true" args="-d $(find iiwa_tool_examples)/launch/iiwa_tool.rviz" output="screen" /> -->
+  
+</launch>

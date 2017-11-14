@@ -1,0 +1,3 @@
+---
+# output: detected items, including bounding box and confidence 
+BoundingBox[] boundingBoxes

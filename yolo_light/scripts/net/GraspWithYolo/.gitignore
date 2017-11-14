@@ -1,0 +1,9 @@
+/backup/
+/raw-data/
+/data/
+/output/
+__pycache__/
+
+
+*.pyc
+.Trash-*

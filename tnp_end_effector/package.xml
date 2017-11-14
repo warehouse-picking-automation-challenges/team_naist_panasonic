@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<package>
+  <name>tnp_end_effector</name>
+  <version>2017.7.31</version>
+  <description>The tnp_end_effector package</description>
+
+  <maintainer email="toyoshima.kenta.th2@is.naist.jp">Kenta Toyoshima</maintainer>
+  <maintainer email="okazaki.yasunao@jp.panasonic.com">Yasunao Okazaki</maintainer>
+
+  <license>ALv2</license>
+
+  <url type="website">http://robotics.naist.jp/team-naist-panasonic</url>
+  
+  <author email="garcia-g@is.naist.jp">Gustavo Garcia</author>
+  <author email="toyoshima.kenta.th2@is.naist.jp">Kenta Toyoshima</author>
+  <author email="okazaki.yasunao@jp.panasonic.com">Yasunao Okazaki</author>
+  <author email="marcus.gall.lw3@is.naist.jp">Marcus Gall</author>
+  <author email="felix.von_drigalski.fp6@is.naist.jp">Felix von Drigalski</author>
+  <author email="pedro.uriguen.pl3@is.naist.jp">Pedro Uriguen</author>
+  <author email="rodrigo.elizalde.qy5@is.naist.jp">Rodrigo Elizalde</author>  
+  <author email="yamamoto.mas@jp.panasonic.com">Masaki Yamamoto</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+
+  <!-- TNP dependencies. -->
+  <build_depend>tnp_serial_com</build_depend>
+  
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <!-- TNP dependencies. -->
+  <run_depend>tnp_serial_com</run_depend>
+
+  <export>
+  </export>
+</package>

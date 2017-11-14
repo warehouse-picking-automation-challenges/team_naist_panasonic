@@ -1,0 +1,4 @@
+string container_name
+int32 height 		# This is not really implemented. Default is 2. 1 = "high", 2 = "mid", 3 = "low"
+---
+bool success

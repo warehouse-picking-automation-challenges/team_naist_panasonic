@@ -1,0 +1,16 @@
+scale:
+    - [1, 1, -1.7608]
+    - [1, 1, -1.4945]
+    - [1, 1, -1.4425]
+    - [1, 1, -1.4425]
+
+
+# This file is for the DAQ with the sensors:
+# IFG0A021
+# IFG0A022
+# IFG0A025
+# IFG0A030
+
+# It was used under bin A.
+
+# Calibration done on June 23 roughly by Felix.

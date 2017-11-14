@@ -1,0 +1,3 @@
+---
+# array of number of pictures received
+std_msgs/Int16 num_pics_received

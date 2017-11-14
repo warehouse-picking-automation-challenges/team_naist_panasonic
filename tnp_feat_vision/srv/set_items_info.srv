@@ -1,0 +1,7 @@
+#this loads the info from the Amazon USB
+std_msgs/String[] items_ids
+std_msgs/Float64[] items_dimensions_x
+std_msgs/Float64[] items_dimensions_y
+std_msgs/Float64[] items_dimensions_z
+---
+std_msgs/Int64 total_items

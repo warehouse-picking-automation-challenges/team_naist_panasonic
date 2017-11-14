@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<launch>
+  <!-- Name of the tool we are going to use -->
+  <arg name="tool_name" default="tnptool"/>
+
+  <param name="/iiwa/toolName" type="string" value="$(arg tool_name)" /> <!--Sunrise tool-->
+
+  <include file="$(find iiwa_tnptool_moveit)/launch/moveit_planning_execution.launch">
+    <arg name="sim" value="false"/>
+  </include>
+
+  <!-- Parameters to pass to the ROS node -->
+  <arg name="move_group" default="manipulator"/>
+  <arg name="ros_rate" default="0.1"/>
+
+  <arg name="use_LIN_motion" default="true"/>
+  <arg name="velocity_scaling_factor" default="1.0"/>
+  <arg name="eef_step" default="0.01"/>
+  <arg name="jump_threshold" default="0.0"/>
+
+  <node ns="iiwa" name="tnp_moveit_planner" pkg="tnp_moveit_planner" type="tnp_moveit_planner" respawn="false" output="screen">
+    <param name="move_group" value="$(arg move_group)"/>
+    <param name="velocity_scaling_factor" value="$(arg velocity_scaling_factor)"/>
+    <param name="use_LIN_motion" type="bool" value="$(arg use_LIN_motion)"/>
+    <param name="eef_step" value="$(arg eef_step)"/>
+    <param name="jump_threshold" value="$(arg jump_threshold)"/>
+  </node>
+
+  <!-- hand eye calibration (using calibration cube) -->
+  <node pkg="tf" type="static_transform_publisher" name="camera_rgb_frame_cube_calib_broadcaster"
+    args="-0.189 -0.022 0.139 -0.047 -0.031 -0.708 0.704 iiwa_link_ee tnp_ee_camera_frame 50" /> <!--7/11-->
+  <!-- Manual fix for depth of SR300-->
+  <node pkg="tf" type="static_transform_publisher" name="alignement_between_ee_rgb_and_depth_frames_broadcaster"
+        args="-0.035 0.026 -0.01    0.026 0.044 -0.001 0.999        tnp_ee_camera_frame tnp_ee_depth_camera_frame 100" />
+  <!--Photoneo MANUAL calibration-->
+  <node pkg="tf" type="static_transform_publisher" name="sr300_to_photoneo_frame_broadcaster"
+        args="0.11 0.065 -0.06      0 -0.044 0 0.999        tnp_ee_camera_frame phoxi_camera 100" />
+
+  <!-- Dummy frames to connect the dangling camera frames to the world -->
+  <node pkg="tf" type="static_transform_publisher" name="camera_C_link_dummy_broadcaster" args="0 0 0 0 0 0 1 world camera_C_link 50" />
+  <node pkg="tf" type="static_transform_publisher" name="camera_R_link_dummy_broadcaster" args="0 0 0 0 0 0 1 world camera_R_link 50" />
+  <node pkg="tf" type="static_transform_publisher" name="camera_L_link_dummy_broadcaster" args="0 0 0 0 0 0 1 world camera_L_link 50" />
+
+  <node pkg="tf" type="static_transform_publisher" name="camera_link_dummy_broadcaster" args="0 0 0 0 0 0 1 world camera_link 50" />
+
+</launch>

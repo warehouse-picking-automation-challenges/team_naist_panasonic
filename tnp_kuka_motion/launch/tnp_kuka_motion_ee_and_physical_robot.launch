@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+Version:  2017.07.31
+Authors:  Members of the Team NAIST-Panasonic at the Amazon Robotics Challenge 2017
+          Gustavo A. Garcia R. garcia-g at is.naist.jp (Captain), 
+          Lotfi El Hafi, Felix von Drigalski, Wataru Yamazaki, Viktor Hoerig, Arnaud Delmotte, 
+          Akishige Yuguchi, Marcus Gall, Chika Shiogama, Kenta Toyoshima, Pedro Uriguen, 
+          Rodrigo Elizalde, Masaki Yamamoto, Yasunao Okazaki, Kazuo Inoue, Katsuhiko Asai, 
+          Ryutaro Futakuchi, Seigo Okada, Yusuke Kato, and Pin-Chu Yang
+*******************
+Copyright 2017 Team NAIST-Panasonic 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*******************
+-->
+
+<launch>
+  
+  <!-- This publishes the TF frames of the physical robot, tool and environment -->
+  <group>
+    <!-- Include the end effector & environment frames -->
+    <arg name="hardware_interface" default="PositionJointInterface"/>
+    <arg name="robot_name" default="iiwa"/>
+    <arg name="model" default="iiwa14"/>
+    <include file="$(find iiwa_tnptool_description)/launch/$(arg model)_tnptool_upload.launch">
+        <arg name="hardware_interface" value="$(arg hardware_interface)"/>
+        <arg name="robot_name" value="$(arg robot_name)" />
+      </include>
+    <!-- Publish joint states (avoid joint_state_controller)-->
+    <param name="/iiwa/publishJointStates" type="boolean" value="true" /> 
+    <param name="use_sim_time" type="boolean" value="false" /> 
+  </group>
+
+  <!-- tnp_kuka_motion and end_effector  -->
+  <group>
+    <node name="tnp_kuka_motion" pkg="tnp_kuka_motion" type="tnp_kuka_motion" respawn="false" output="screen" />
+    <include file="$(find tnp_end_effector)/launch/tnp_end_effector.launch">
+      <arg name="arduino_dev" value="/dev/ttyACM0" />
+    </include>
+  </group>
+
+  <!-- The MoveIt motion planner -->
+  <include file="$(find tnp_moveit_planner)/launch/tnp_moveit_planner.launch">
+  </include>
+  
+</launch>

@@ -1,0 +1,13 @@
+std_msgs/String[] cam_id
+sensor_msgs/Image[]  rgb_data
+sensor_msgs/Image[]  depth_data
+sensor_msgs/CameraInfo[]  rgb_info_data
+sensor_msgs/CameraInfo[]  depth_info_data
+---
+geometry_msgs/PoseStamped bb_pose
+# bb_width in bb_pose.x
+std_msgs/Float64 bb_width
+# bb_length in bb_pose.y
+std_msgs/Float64 bb_length
+# bb_height in bb_pose.z
+std_msgs/Float64 bb_height

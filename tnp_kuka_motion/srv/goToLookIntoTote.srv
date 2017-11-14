@@ -1,0 +1,4 @@
+# this defines the different points of views that we want to test for the DL node to recognize something
+std_msgs/Int16 point_of_view
+int32 height 		# 1 = "high", 2 = "mid", 3 = "low"
+---
